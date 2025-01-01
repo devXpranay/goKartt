@@ -21,5 +21,5 @@ func InitDB(db *sql.DB) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	log.Println("DB: Successfully connected")
+	log.Println("DB: Successfully connected, able to Ping")
 }

@@ -9,6 +9,9 @@
 *.test
 *.out
 
+# Bin
+bin/
+
 # Dependency directories
 /vendor/
 Gopkg.lock

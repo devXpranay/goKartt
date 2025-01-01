@@ -1,6 +1,8 @@
 # Variables
 APP_NAME = goKart
 CMD_PATH = ./cmd/main.go
+MIGRATE_PATH = ./cmd/migrate/main.go
+MIGRATIONS_DIR = ./cmd/migrate/migrations
 BUILD_DIR = ./bin
 
 # Go commands
@@ -16,13 +18,25 @@ default: build
 # Build the project
 build:
 	@echo "Building $(APP_NAME)..."
-	@mkdir -p $(BUILD_DIR)
+	@if [ ! -d "$(BUILD_DIR)" ]; then mkdir -p $(BUILD_DIR); fi
 	$(GO_BUILD) -o $(BUILD_DIR)/$(APP_NAME) $(CMD_PATH)
 
 # Run the project
 run:
 	@echo "Running $(APP_NAME)..."
 	$(GO_RUN) $(CMD_PATH)
+
+# Database migrations
+migrate-up:
+	@echo "Running database migrations: up..."
+	$(GO_RUN) $(MIGRATE_PATH) up
+
+migrate-down:
+	@echo "Running database migrations: down..."
+	$(GO_RUN) $(MIGRATE_PATH) down
+
+migration:
+	@migrate create -ext sql -dir $(MIGRATIONS_DIR) $(filter-out $@,$(MAKECMDGOALS))
 
 # Clean build artifacts
 clean:
@@ -32,7 +46,7 @@ clean:
 # Run tests
 test:
 	@echo "Running tests..."
-	$(GO_TEST) -v ./...
+	$(GO_TEST) ./...
 
 # Lint the code
 lint:
@@ -47,10 +61,13 @@ fmt:
 # Help
 help:
 	@echo "Makefile targets:"
-	@echo "  build      Build the project"
-	@echo "  run        Run the project"
-	@echo "  clean      Remove build artifacts"
-	@echo "  test       Run all tests"
-	@echo "  lint       Lint the code"
-	@echo "  fmt        Format the code"
-	@echo "  help       Display this help message"
+	@echo "  build          Build the project"
+	@echo "  run            Run the project"
+	@echo "  migrate-up     Run database migrations: up"
+	@echo "  migrate-down   Run database migrations: down"
+	@echo "  migration      Create a new database migration"
+	@echo "  clean          Remove build artifacts"
+	@echo "  test           Run all tests"
+	@echo "  lint           Lint the code"
+	@echo "  fmt            Format the code"
+	@echo "  help           Display this help message"
