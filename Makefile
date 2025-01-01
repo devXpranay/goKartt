@@ -32,7 +32,7 @@ clean:
 # Run tests
 test:
 	@echo "Running tests..."
-	$(GO_TEST) ./...
+	$(GO_TEST) -v ./...
 
 # Lint the code
 lint:
