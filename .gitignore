@@ -1,0 +1,36 @@
+.env*# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, build, and output
+*.test
+*.out
+
+# Dependency directories
+/vendor/
+Gopkg.lock
+Gopkg.toml
+go.sum
+
+# Editor and IDE configurations
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs and debug files
+*.log
+
+# Environment files
+.env
+.env.local
+
+# Node.js dependencies (if using frontend in the same repo)
+node_modules/
+
+# System files
+.DS_Store
+Thumbs.db
